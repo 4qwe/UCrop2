@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -46,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         i = findViewById(R.id.imageView);
+        Button b2 = findViewById(R.id.button3);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doGlide();
+            }
+        });
     }
 
     private void openCamera() {
@@ -66,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(pictureIntent, 113);
     }
 
+    private void doGlide() {
+        System.out.println("I execute");
+        Uri uri = Uri.parse("file:///sdcard/Download/DSC00856.JPG"); //hardcoded für mein samsung
+        Glide.with(this).load(uri).override(Target.SIZE_ORIGINAL).into(i);//failed silently ohne override
+    }
 
     String currentPhotoPath = "";
 
