@@ -2,8 +2,6 @@ package com.paul.ucrop2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,13 +17,10 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -77,8 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void doGlide() {
         System.out.println("I execute");
-        Uri uri = Uri.parse("file:///sdcard/Download/DSC00856.JPG"); //hardcoded für mein samsung
-        Glide.with(this).load(uri).override(Target.SIZE_ORIGINAL).into(i);//failed silently ohne override
+        //Uri uri = Uri.parse("file:///sdcard/Download/846kh8s8wbi21.jpg"); //hardcoded für mein samsung
+        Glide.with(this)
+                .load("https://cdn.prod.www.spiegel.de/images/1a7c9bed-f017-41a0-9571-8cddbe73a68c_w948_r1.77_fpx69.99_fpy49.jpg")
+                .circleCrop()
+                .into(i);//failed silently ohne override
     }
 
     String currentPhotoPath = "";
@@ -136,17 +134,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showImage(Uri imageUri) { //Exception {new FileInputStream}, aber muss alle variablen einschließen
-        try {
-            File file;
-            file = getFile(this, imageUri);
-            InputStream inputStream = new FileInputStream(file);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            i.setImageBitmap(bitmap);
-        }
-        catch (Exception e) {
-            System.out.println("mach etwas mit e");
-            e.printStackTrace();
-        }
+//        try {
+//            File file;
+//            file = getFile(this, imageUri);
+//            InputStream inputStream = new FileInputStream(file);
+//            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//            i.setImageBitmap(bitmap);
+//        }
+//        catch (Exception e) {
+//            System.out.println("mach etwas mit e");
+//            e.printStackTrace();
+//        }
+        Glide.with(this).load(imageUri).into(i);//failed silently ohne override
+
     }
 
     public File getFile(Context context, Uri uri) {
